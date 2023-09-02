@@ -14,11 +14,11 @@ pub struct Pokemon {
     pub image: String,
 }
 
-#[derive(FromRow, Serialize)]
-pub struct Type {
-    pub name: String,
-    pub url: String,
-}
+// #[derive(FromRow, Serialize)]
+// pub struct Type {
+//     pub name: String,
+//     pub url: String,
+// }
 
 pub async fn all_pokemons(State(pool): State<SqlitePool>) -> Json<Vec<Pokemon>> {
     let pokemons: Vec<Pokemon> = query_as("SELECT * FROM pokemon")
