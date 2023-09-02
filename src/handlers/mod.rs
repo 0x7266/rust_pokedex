@@ -1,5 +1,5 @@
 pub mod get;
 
-pub fn index() -> String {
+pub async fn index() -> String {
     "hello, world!".to_string()
 }
