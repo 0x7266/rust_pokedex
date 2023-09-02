@@ -9,6 +9,7 @@ pub async fn router() -> Router {
     let connection = database::connect()
         .await
         .expect("Failed to connect to the database");
+    // let connection_state = std::sync::Arc::new(connection);
     Router::new()
         .route("/", get(index))
         .route("/pokemon", get(all_pokemons))
