@@ -1,4 +1,4 @@
 /target
 /migrations
 .env
-database.sqlite
+database.sqlite*
