@@ -1,4 +1,4 @@
-use axum::{extract::State, Json};
+use axum::{extract::Path, extract::State, Json};
 use serde::Serialize;
 use sqlx::{query_as, FromRow, SqlitePool};
 
@@ -26,4 +26,13 @@ pub async fn all_pokemons(State(pool): State<SqlitePool>) -> Json<Vec<Pokemon>> 
         .await
         .unwrap();
     Json(pokemons)
+}
+
+pub async fn by_id(State(pool): State<SqlitePool>, Path(id): Path<i32>) -> Json<Pokemon> {
+    let pokemon = query_as("SELECT * FROM Pokemon WHERE id = ($1)")
+        .bind(id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+    Json(pokemon)
 }
