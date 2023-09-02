@@ -1,15 +1,15 @@
 use axum::{extract::State, Json};
 use serde::{Deserialize, Serialize};
-use sqlx::{error::Error, query_as, FromRow, SqlitePool};
+use sqlx::{query_as, FromRow, SqlitePool};
 
 #[derive(Debug, Deserialize, FromRow, Serialize)]
 pub struct Pokemon {
     pub id: i64,
     pub name: String,
-    pub types: Vec<Type>,
+    // pub types: Vec<Type>,
     pub height: i64,
     pub weight: i64,
-    pub abilities: Vec<String>,
+    // pub abilities: Vec<String>,
     pub gif: String,
     pub image: String,
 }
@@ -27,8 +27,11 @@ pub struct Type {
     pub url: String,
 }
 
-pub async fn all_pokemons(State(pool): State<SqlitePool>) -> Result<Json<Vec<Pokemon>>, Error> {
-    let pokemons: Vec<Pokemon> = query_as("SELECT * FROM pokemon").fetch_all(&pool).await?;
+pub async fn all_pokemons(State(pool): State<SqlitePool>) -> Json<Vec<Pokemon>> {
+    let pokemons: Vec<Pokemon> = query_as("SELECT * FROM pokemon")
+        .fetch_all(&pool)
+        .await
+        .unwrap();
     println!("{:?}", pokemons);
-    todo!()
+    Json(pokemons)
 }
