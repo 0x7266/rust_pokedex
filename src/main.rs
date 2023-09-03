@@ -6,6 +6,7 @@ use router::router;
 
 #[tokio::main]
 async fn main() {
+    dotenvy::dotenv().ok();
     let app = router().await;
     axum::Server::bind(&"0.0.0.0:7878".parse().unwrap())
         .serve(app.into_make_service())
