@@ -1,11 +1,8 @@
 use axum::{routing::get, Router};
 
-use crate::{
-    handlers::{
-        get::{all_pokemons, by_id},
-        index,
-    },
-    infra::database,
+use crate::infra::{
+    database,
+    http::handlers::get::{all_pokemons, by_id, index},
 };
 
 pub async fn router() -> Router {

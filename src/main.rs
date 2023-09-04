@@ -1,15 +1,10 @@
-mod handlers;
+mod core;
 mod infra;
-mod router;
 
-use router::router;
+use infra::http;
 
 #[tokio::main]
 async fn main() {
     dotenvy::dotenv().ok();
-    let app = router().await;
-    axum::Server::bind(&"0.0.0.0:7878".parse().unwrap())
-        .serve(app.into_make_service())
-        .await
-        .unwrap()
+    http::server::init().await
 }
