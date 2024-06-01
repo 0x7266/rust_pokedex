@@ -2,8 +2,8 @@ use super::routes::router;
 
 pub async fn init() {
     let app = router().await;
-    axum::Server::bind(&"0.0.0.0:7878".parse().unwrap())
-        .serve(app.into_make_service())
+    let listener = tokio::net::TcpListener::bind("localhost:3333")
         .await
-        .unwrap()
+        .unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
