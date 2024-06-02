@@ -12,4 +12,5 @@ ENV DATABASE_URL=sqlite://sqlite.db
 WORKDIR /home/pokedex
 COPY --from=build /pokedex/target/release/pokedex .
 COPY sqlite.* .
+EXPOSE 3333
 CMD ["./pokedex"]
